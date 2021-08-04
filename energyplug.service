@@ -1,0 +1,16 @@
+[Unit]
+Description=Energyplug Service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=10
+StartLimitBurst=50
+StartLimitIntervalSec=10
+User=pi
+ExecStart=node /home/pi/energy_consumption/tasmota_data_gatherer.js
+
+[Install]
+WantedBy=multi-user.target
