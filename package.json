@@ -1,0 +1,17 @@
+{
+  "name": "energy_consumption",
+  "version": "1.0.0",
+  "description": "energy_consumption tasks",
+  "main": "tasmota_data_gatherer.js",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "influx": "^5.9.2",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "thewildbear",
+  "license": "GPL3"
+}
