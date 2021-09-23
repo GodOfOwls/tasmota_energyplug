@@ -1,7 +1,8 @@
 {
+	"orga":"yourorga",
+	"bucket":"yourbucket",
 	"Influx":"Influxaddress",
 	"measurement":"measurement name",
-	"database":"database_name",
 	"devices":
 		[
 			{

@@ -1,14 +1,19 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
-const Influx = require('influx');
-var config = require('/home/pi/energy_consumption/config');
+const Influx = require('influxdb-v2');
+var config = require('./config_influx2');
 const db = new Influx.InfluxDB(config.Influx);
 
 async function writeNewDataPoint(i) {
 	const res = await fetch('http://' + config.devices[i].ip + '/cm?cmnd=status%208');
 	const data = await res.json();
-	db.writePoints([
-		{
+	db.write(
+	{
+		org: config.orga,
+		bucket: config.bucket,
+		precision: 'ms'
+	},
+	[{
 			measurement: config.measurement,
 			tags: {host: config.devices[i].name},
 			fields:
@@ -22,14 +27,8 @@ async function writeNewDataPoint(i) {
 				voltage: data.StatusSNS.ENERGY.Voltage,
 				current: data.StatusSNS.ENERGY.Current
 			},
-		}
-	], {
-		database: config.database,
-		precision: 's',
-	}).catch(error => {
-		console.error('Error saving data to InfluxDB!' + error)
-	});
-
+	}]
+	);
 }
 
 function gather_and_save_data ()
