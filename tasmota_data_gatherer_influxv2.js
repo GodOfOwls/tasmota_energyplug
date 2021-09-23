@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const fs = require('fs');
 const Influx = require('influxdb-v2');
-var config = require('./config');
+var config = require('./config_influx2');
 const db = new Influx.InfluxDB(config.Influx);
 
 async function writeNewDataPoint(i) {
