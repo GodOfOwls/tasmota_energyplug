@@ -1,0 +1,21 @@
+{
+    "orga":"Your Org",
+    "bucket":"Your Bukket",
+    "Influx":"Influx IP / Domain",
+    "protocol": "http/https",
+    "port": 8086,
+    "Token": "Influx User Token. Can be located InfluxGUI -> Data -> Tokens -> Select USer",
+    "measurement":"Tasmota",
+    "devices":
+                [
+			{
+				"ip":"the ip of your device",
+				"name":"name of your device"
+			},
+			{
+				"ip":"ip of second device",
+				"name":"name of second device"
+			}
+	        ]
+
+}
