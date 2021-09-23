@@ -6,6 +6,7 @@
   "dependencies": {
     "fs": "0.0.1-security",
     "influx": "^5.9.2",
+    "influxdb-v2": "^1.0.0",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {},

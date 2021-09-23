@@ -27,10 +27,8 @@ async function writeNewDataPoint(i) {
 				voltage: data.StatusSNS.ENERGY.Voltage,
 				current: data.StatusSNS.ENERGY.Current
 			},
-	}].catch(error => {
-		console.error('Error saving data to InfluxDB!' + error)
-	});
-
+	}]
+	);
 }
 
 function gather_and_save_data ()
