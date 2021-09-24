@@ -41,7 +41,6 @@ function gather_and_save_data ()
 	{
 		writeNewDataPoint(counter).catch(error => {
 			console.error('\nAn error occurred!', error);
-			process.exit(1);
 		  });
 	}
 }
