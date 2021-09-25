@@ -29,7 +29,8 @@ async function writeNewDataPoint(i) {
 				today: data.StatusSNS.ENERGY.Today,
 				yesterday: data.StatusSNS.ENERGY.Yesterday,
 				voltage: data.StatusSNS.ENERGY.Voltage,
-				current: data.StatusSNS.ENERGY.Current
+				current: data.StatusSNS.ENERGY.Current,
+				total: data.StatusSNS.ENERGY.Total
 			},
 	}]
 	);
