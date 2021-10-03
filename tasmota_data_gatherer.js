@@ -1,13 +1,17 @@
 const fetch = require('node-fetch');
-const fs = require('fs');
-const Influx = require('influxdb-v2');
-var config = require('./config_influx2');
-const db = new Influx.InfluxDB(config.Influx);
+const Influxdb = require('influxdb-v2');
+const config = require('./config_influx2');
+const db = new Influxdb({
+	host: config.Influx,
+	protocol: config.protocol,
+	port: config.port,
+	token: config.Token
+});
 
 async function writeNewDataPoint(i) {
 	const res = await fetch('http://' + config.devices[i].ip + '/cm?cmnd=status%208');
 	const data = await res.json();
-	db.write(
+	await db.write(
 	{
 		org: config.orga,
 		bucket: config.bucket,
@@ -25,7 +29,8 @@ async function writeNewDataPoint(i) {
 				today: data.StatusSNS.ENERGY.Today,
 				yesterday: data.StatusSNS.ENERGY.Yesterday,
 				voltage: data.StatusSNS.ENERGY.Voltage,
-				current: data.StatusSNS.ENERGY.Current
+				current: data.StatusSNS.ENERGY.Current,
+				total: data.StatusSNS.ENERGY.Total
 			},
 	}]
 	);
@@ -35,7 +40,9 @@ function gather_and_save_data ()
 {
 	for(let counter=0; counter <= ((config.devices.length - 1) ); counter++)
 	{
-		writeNewDataPoint(counter);
+		writeNewDataPoint(counter).catch(error => {
+			console.error('\nAn error occurred!', error);
+		  });
 	}
 }
 
