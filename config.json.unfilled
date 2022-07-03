@@ -6,6 +6,8 @@
     "port": 8086,
     "Token": "Influx User Token. Can be located InfluxGUI -> Data -> Tokens -> Select USer",
     "measurement":"Tasmota",
+    "price_ht":"27,67",
+    "price_nt":"20,62",
     "devices":
                 [
 			{
