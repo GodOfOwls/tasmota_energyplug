@@ -83,7 +83,7 @@ async function writeNewDataPoint(i) {
 				current: data.StatusSNS.ENERGY.Current,
 				total: data.StatusSNS.ENERGY.Total,
 				tariff: tariff,
-				costperkwh: cost
+				costperkwhNr: parseFloat(cost)
 			},
 		}]
 	);
