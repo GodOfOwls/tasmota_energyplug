@@ -62,31 +62,53 @@ async function writeNewDataPoint(i) {
 	const { tariff, cost } = await GetCurrentTariff();
 	const res = await fetch('http://' + config.devices[i].ip + '/cm?cmnd=status%208');
 	const data = await res.json();
-	await db.write(
-		{
-			org: config.orga,
-			bucket: config.bucket,
-			precision: 'ms'
-		},
-		[{
-			measurement: config.measurement,
-			tags: { host: config.devices[i].name },
-			fields:
+	if (config.devices[i]?.type?.toLowerCase() === "meter"){
+		await db.write(
 			{
-				power: data.StatusSNS.ENERGY.Power,
-				apperentpower: data.StatusSNS.ENERGY.ApparentPower,
-				reactivepower: data.StatusSNS.ENERGY.ReactivePower,
-				factor: data.StatusSNS.ENERGY.Factor,
-				today: data.StatusSNS.ENERGY.Today,
-				yesterday: data.StatusSNS.ENERGY.Yesterday,
-				voltage: data.StatusSNS.ENERGY.Voltage,
-				current: data.StatusSNS.ENERGY.Current,
-				total: data.StatusSNS.ENERGY.Total,
-				tariff: tariff,
-				costperkwhNr: parseFloat(cost)
+				org: config.orga,
+				bucket: config.bucket,
+				precision: 'ms'
 			},
-		}]
-	);
+			[{
+				measurement: config.measurement,
+				tags: { host: config.devices[i].name },
+				fields:
+				{
+					usage: data.StatusSNS.Zaehler.Verbrauch1,
+					deliverd: data.StatusSNS.Zaehler.Lieferung1,
+					L1: data.StatusSNS.Zaehler.P_L1,
+					L2: data.StatusSNS.Zaehler.P_L2,
+					L3: data.StatusSNS.Zaehler.P_L3,
+				},
+			}]
+		);
+	} else {
+		await db.write(
+			{
+				org: config.orga,
+				bucket: config.bucket,
+				precision: 'ms'
+			},
+			[{
+				measurement: config.measurement,
+				tags: { host: config.devices[i].name },
+				fields:
+				{
+					power: data.StatusSNS.ENERGY.Power,
+					apperentpower: data.StatusSNS.ENERGY.ApparentPower,
+					reactivepower: data.StatusSNS.ENERGY.ReactivePower,
+					factor: data.StatusSNS.ENERGY.Factor,
+					today: data.StatusSNS.ENERGY.Today,
+					yesterday: data.StatusSNS.ENERGY.Yesterday,
+					voltage: data.StatusSNS.ENERGY.Voltage,
+					current: data.StatusSNS.ENERGY.Current,
+					total: data.StatusSNS.ENERGY.Total,
+					tariff: tariff,
+					costperkwhNr: parseFloat(cost)
+				},
+			}]
+		);
+	}
 }
 
 function gather_and_save_data() {
