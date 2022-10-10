@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const Influxdb = require('influxdb-v2');
 const { isHoliday } = require('feiertagejs');
-const config = require('./config_influx2');
+const config = require('./config');
 const db = new Influxdb({
 	host: config.Influx,
 	protocol: config.protocol,
